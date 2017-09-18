@@ -76,9 +76,9 @@ table {
 }
 
 #Help {
-    margin: -200px -200px;
+    margin: -200px -170px;
     padding: 0px;
-    width: 400px;
+    width: 340px;
     height: 400px;
     overflow: hidden;
     position: fixed;

@@ -33,7 +33,7 @@ function aventurien_maze_html($name, $title) {
     $path_local = plugin_dir_path(__FILE__);
     $path_url = plugins_url() . "/aventurien-maze";
 
-    $output = '<iframe src="' . $path_url . '/Maze.php?name=' . $name . '&title=' . $title. '" style="height: 600px; -webkit-filter: none; filter: none; border: 0px;"></iframe>';
+    $output = '<iframe src="' . $path_url . '/Maze.php?name=' . $name . '&title=' . $title. '" style="height: 420px; -webkit-filter: none; filter: none; border: 0px;"></iframe>';
 
 	return $output;
 }
