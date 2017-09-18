@@ -189,6 +189,13 @@
 		    </div>
 		</div>
 		<div id="Mask"></div>
+        <div id="Controls">
+            <div id="Up" class="button" onclick="button(38)"></div>
+            <div id="Left" class="button" onclick="button(37)"></div>
+            <div id="Down" class="button" onclick="button(40)"></div>
+            <div id="Right" class="button" onclick="button(39)"></div>
+            <div id="Space" class="button" onclick="button(32)"></div>
+        </div>
 		<div id="Curtain"></div>
 		<div id="Help" class="disable-select">
             <div class="Window">
@@ -196,7 +203,7 @@
                 <p>Usage:<br><br>
                 Use the W S A D keys or the cursor keys for movement.<br>
                 Use the SPACE key to interact (dig through rubble, etc.)<br><br><br></p>
-                <div class="Start" onclick="start()"></div>
+                <div id="Start" class="button" onclick="start()"></div>
             </div>
         </div>
 	</body>
