@@ -189,6 +189,7 @@
 		    </div>
 		</div>
 		<div id="Mask"></div>
+		<div id="Curtain"></div>
 		<div id="Help" class="disable-select">
             <div class="Window">
                 <h1><?php echo($title); ?></h1>

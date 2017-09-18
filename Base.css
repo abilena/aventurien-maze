@@ -62,6 +62,19 @@ table {
 	background-size: cover;
 }
 
+#Curtain {
+	margin: -200px -200px;
+	padding: 0px;
+	width: 400px;
+	height: 400px;
+	overflow: hidden;
+	position: fixed;
+	top: 50%;
+    left: 50%;
+	z-index: 25;
+    background-color: #000000;
+}
+
 #Help {
     margin: -200px -200px;
     padding: 0px;

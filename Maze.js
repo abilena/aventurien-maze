@@ -15,8 +15,10 @@ var started = false;
 
 function start()
 {
-    var start = document.getElementById("Help");
-    start.style.display = 'none';
+    var help = document.getElementById("Help");
+    help.style.display = 'none';
+    var curtain = document.getElementById("Curtain");
+    curtain.style.display = 'none';
     started = true;
 }
 
@@ -46,6 +48,9 @@ function initialize()
 	
 	window.addEventListener("keydown", updateKey, true);
 	var id = window.setInterval(update, 100);
+
+    var mask = document.getElementById('Mask');
+    swipedetect(mask, swipe);
 }
 
 function getElement(name, row, col)
@@ -115,6 +120,18 @@ function doMovement()
 				movement_x.animate(20, function(px) { maze_element.style.left = px + 'px'; }, function() { movement_x = null; pos_x -= 1; current_keyCode = 0; });
 				movement_y = null;
 				break;
+            case 112: // f1 key
+            case 72: // H key
+                current_keyCode = 0;
+                var help = document.getElementById("Help");
+                help.style.display = 'block';
+                break;
+            case 123: // f12 key
+                current_keyCode = 0;
+                var url = window.location.href;
+                url = url.replace('Maze.php', 'Map.php');
+                window.location.href = url;
+                break;
 			case 32: // space key
 				var overlay = getElement("Overlay", -pos_x, -pos_y);
 				if (overlay == null)
@@ -154,6 +171,9 @@ function isKeyCodeValid(keyCode)
 		case 68: // D key
 			return (allowedPaths.indexOf('E') > -1);
 		case 32: // space key
+        case 72: // H key
+        case 112: // f1 key
+        case 123: // f12 key
 			return true;
 		case 116: // f5 key (refreshing browser)
 		case 144: // num-lock key
@@ -161,3 +181,85 @@ function isKeyCodeValid(keyCode)
 			return false;
 	}
 }
+
+// credit: http://www.javascriptkit.com/javatutors/touchevents2.shtml
+function swipedetect(el, callback)
+{
+    var touchsurface = el,
+    swipedir,
+    startX,
+    startY,
+    distX,
+    distY,
+    threshold = 150, //required min distance traveled to be considered swipe
+    restraint = 100, // maximum distance allowed at the same time in perpendicular direction
+    allowedTime = 300, // maximum time allowed to travel that distance
+    elapsedTime,
+    startTime,
+    handleswipe = callback || function (swipedir) { };
+
+    touchsurface.addEventListener('touchstart', function (e) {
+        var touchobj = e.changedTouches[0];
+        swipedir = 'none';
+        dist = 0;
+        startX = touchobj.pageX;
+        startY = touchobj.pageY;
+        startTime = new Date().getTime(); // record time when finger first makes contact with surface
+        e.preventDefault();
+    }, false)
+  
+    touchsurface.addEventListener('touchmove', function(e) {
+        e.preventDefault(); // prevent scrolling when inside DIV
+    }, false)
+
+    touchsurface.addEventListener('touchend', function (e) {
+        var touchobj = e.changedTouches[0];
+        distX = touchobj.pageX - startX; // get horizontal dist traveled by finger while in contact with surface
+        distY = touchobj.pageY - startY; // get vertical dist traveled by finger while in contact with surface
+        elapsedTime = new Date().getTime() - startTime; // get time elapsed
+        if (elapsedTime <= allowedTime) { // first condition for awipe met
+            if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) { // 2nd condition for horizontal swipe met
+                swipedir = (distX < 0) ? 'left' : 'right'; // if dist traveled is negative, it indicates left swipe
+            }
+            else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint) { // 2nd condition for vertical swipe met
+                swipedir = (distY < 0) ? 'up' : 'down'; // if dist traveled is negative, it indicates up swipe
+            }
+            else {
+                swipedir = 'click';
+            }
+        }
+        handleswipe(swipedir);
+        e.preventDefault();
+    }, false)
+}
+  
+function swipe(swipedir)
+{
+    // swipedir contains either "none", "left", "right", "top", "down" or "click"
+    if (swipedir == "left")
+    {
+        current_keyCode = 39; // arrow right key
+        doMovement();
+    }
+    else if (swipedir == "up")
+    {
+        current_keyCode = 40; // arrow down key
+        doMovement();
+    }
+    else if (swipedir == "right")
+    {
+        current_keyCode = 37; // arrow left key
+        doMovement();
+    }
+    else if (swipedir == "down")
+    {
+        current_keyCode = 38; // arrow up key
+        doMovement();
+    }
+    else if (swipedir == "click")
+    {
+        current_keyCode = 32; // space key
+        doMovement();
+    }
+}
+
